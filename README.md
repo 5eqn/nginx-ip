@@ -20,8 +20,16 @@ version: "3.8"
 services:
   nginx:
     image: nginx-ip:latest
+    depends_on:
+      server:
+        condition: service_healthy
     ports:
       - 80:80
   server:
     image: some-random-server:latest
+    healthcheck:
+      test: curl --fail 'http://localhost:80' || exit 1
+      interval: 1s
+      timeout: 1s
+      retries: 5
 ```
