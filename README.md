@@ -25,6 +25,11 @@ services:
         condition: service_healthy
     ports:
       - 80:80
+    environment:
+      - PORT=80
+      - PROXY_URL=server:80
+      - BURST=512
+      - RATE=1
   server:
     image: some-random-server:latest
     healthcheck:
